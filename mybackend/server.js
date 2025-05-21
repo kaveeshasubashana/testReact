@@ -1,14 +1,20 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const app = require('./app');
 const mongoose = require('mongoose');
+const app = require('./app');
 
+const url = 'mongodb+srv://kavee:abcd1234@cluster0.h97u6h4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-app.use(cors());
+const connect = async () => {
+    try {
+        await mongoose.connect(url);
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('MongoDB error:', error);
+    }
+};
 
-app.use(express.json());
+connect();
 
-const url = 'mongodb+srv://kavee:abcd1234@cluster0.h97u6h4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-
-const server = app.listen(3001,'127.0.0.1', () =>{ console.log(`node server  is listening to ${server.address().port}`)});
+const PORT = 3001;
+app.listen(PORT, () => {
+    console.log(`Node server is listening on port ${PORT}`);
+});
